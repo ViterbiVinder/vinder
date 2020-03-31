@@ -2,6 +2,7 @@ package CS201.Vinder;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 import java.sql.*;
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -19,9 +20,8 @@ public class IndexController {
         return "Hello there! Vinder API is up and running!";
     }
 
-    @GetMapping("/tags")
-    @ResponseBody
-    public Map<String, Object> tags(@RequestParam(defaultValue = 100) int num) {
+    @RequestMapping(value = "/tags", method = RequestMethod.GET)
+    public Map<String, Object> tags(@RequestParam(value = "num", defaultValue = 100) int num) {
         Map<String, Object> rtn = new LinkedHashMap<>();
         if (num <= 0) {
             num = 100;
