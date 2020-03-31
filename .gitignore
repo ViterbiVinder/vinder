@@ -32,3 +32,5 @@ build/
 
 # Environment Variables
 .env
+.dev.env
+.prod.env

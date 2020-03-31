@@ -12,20 +12,27 @@ public class IndexController {
     private static Statement st = null;
     private static ResultSet rs = null;
 
-    @GetMapping("/")
+    @GetMapping("/", method = RequestMethod.GET,
+    produces = MediaType.APPLICATION_JSON_VALUE)
     public String index() {
         return "Hello there! I'm running.";
     }
 
-    @GetMapping("/tags")
-    public String tags() {
-        String res = "ERROR=500; Failed Query.";
+    @GetMapping("/tags", method = RequestMethod.GET,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public String[] tags(@RequestParam int num) {
+        if(!num || num <= 0) {
+            num = 100;
+        }
+        String[] res = new String[num];
         try {
             getConnection();
-            res = executeTagsStatement();
+            res = executeTagsStatement(num);
         } catch (URISyntaxException uri) {
+            res[0] = "ERROR=500; Failed Query - URI Exception.";
             System.err.print("URI Exception: " + uri.getMessage());
         } catch (SQLException sqle) {
+            res[0] = "ERROR=500; Failed Query - SQL Exception.";
             System.err.print("SQL Exception: " + sqle.getMessage());
         } finally {
             return res;
@@ -42,13 +49,15 @@ public class IndexController {
         conn = DriverManager.getConnection(dbUrl, username, password);
     }
 
-    private static String executeTagsStatement() throws URISyntaxException, SQLException {
-        String res = "";
+    private static String[] executeTagsStatement(int num) throws URISyntaxException, SQLException {
+        String[] res = new String[num];
         st = conn.createStatement();
         rs = st.executeQuery("SELECT * from public.\"Tags\"");
-        while (rs.next()) {
+        int count = 0;
+        while (rs.next() && count < num) {
             String tagName = rs.getString("Name");
-            res += tagName + "\n";
+            res[count] = tagName;
+            ++count;
         }
         return res;
     }
