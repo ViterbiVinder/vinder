@@ -3,6 +3,8 @@ package CS201.Vinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.io.*;
 import java.net.*;
 
@@ -12,16 +14,16 @@ public class IndexController {
     private static Statement st = null;
     private static ResultSet rs = null;
 
-    @GetMapping("/", method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/")
     public String index() {
-        return "Hello there! I'm running.";
+        return "Hello there! Vinder API is up and running!";
     }
 
-    @GetMapping("/tags", method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public String[] tags(@RequestParam int num) {
-        if(!num || num <= 0) {
+    @GetMapping("/tags")
+    @ResponseBody
+    public Map<String, Object> tags(@RequestParam(defaultValue = 100) int num) {
+        Map<String, Object> rtn = new LinkedHashMap<>();
+        if (num <= 0) {
             num = 100;
         }
         String[] res = new String[num];
@@ -35,7 +37,8 @@ public class IndexController {
             res[0] = "ERROR=500; Failed Query - SQL Exception.";
             System.err.print("SQL Exception: " + sqle.getMessage());
         } finally {
-            return res;
+            rtn.put("response", res);
+            return rtn;
         }
     }
 
