@@ -23,7 +23,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/tags", method = RequestMethod.GET)
-    public Map<String, Object> tags(@RequestParam(value = 100, defaultValue = 100) int num) {
+    public Map<String, Object> tags(@RequestParam(required = false ,defaultValu e ="1") int num) {
         Map<String, Object> rtn = new LinkedHashMap<>();
         if (num <= 0) {
             num = 100;
