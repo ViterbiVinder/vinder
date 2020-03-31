@@ -17,7 +17,7 @@ public class IndexController {
     private static Statement st = null;
     private static ResultSet rs = null;
 
-    @GetMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "Hello there! Vinder API is up and running!";
     }
