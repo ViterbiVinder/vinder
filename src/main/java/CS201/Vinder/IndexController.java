@@ -22,8 +22,18 @@ public class IndexController {
         return "Hello there! Vinder API is up and running!";
     }
 
-    @RequestMapping(value = "/tags", method = RequestMethod.GET)
-    public Map<String, Object> tags(@RequestParam(required = false ,defaultValue ="1") int num) {
+    // * Get request for all posts with the given tag [name]
+    @RequestMapping(value = "/get/tag", method = RequestMethod.GET)
+    public Map<String, Object> tags(@RequestParam(required = false, defaultValue = "all") String name) {
+        Map<String, Object> rtn = new LinkedHashMap<>();
+
+        rtn.put("response", "test");
+        return rtn;
+    }
+
+    // * Get request for [num] tags
+    @RequestMapping(value = "/get/tags", method = RequestMethod.GET)
+    public Map<String, Object> tags(@RequestParam(required = false, defaultValue = "1") int num) {
         Map<String, Object> rtn = new LinkedHashMap<>();
         if (num <= 0) {
             num = 100;
