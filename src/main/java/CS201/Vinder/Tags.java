@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 public class Tags {
 
+    @Id
     private String Name;
 
     public Tags() {
