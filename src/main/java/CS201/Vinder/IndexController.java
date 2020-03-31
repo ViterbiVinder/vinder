@@ -3,6 +3,8 @@ package CS201.Vinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
+import java.io.*;
+import java.net.*;
 
 @RestController
 public class IndexController {
@@ -16,7 +18,7 @@ public class IndexController {
     }
 
     @GetMapping("/tags")
-    public String index() {
+    public String tags() {
         String res = "ERROR=500; Failed Query.";
         try {
             getConnection();
