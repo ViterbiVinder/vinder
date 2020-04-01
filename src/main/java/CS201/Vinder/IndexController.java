@@ -105,7 +105,7 @@ public class IndexController {
             x.Date = rs.getDate("Date");
             x.Author = rs.getString("Author");
             x.Content = rs.getString("Content");
-            x.Tags = rs.getArray("Tags");
+            //x.Tags = rs.getArray("Tags");
             res[count] = x;
             ++count;
         }
